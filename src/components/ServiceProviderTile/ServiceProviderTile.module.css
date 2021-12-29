@@ -1,0 +1,9 @@
+.content {
+    width: 400px;
+    background-color: lightgray;
+}
+
+.rating {
+    background-color: rgb(243, 70, 70);
+    padding: 10px;
+}
