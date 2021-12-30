@@ -1,14 +1,18 @@
+import { Route, Router, Routes } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
 import ProviderContainer from "./components/ProviderContainer/ProviderContainer";
-import ServiceProviderTile from "./components/ServiceProviderTile/ServiceProviderTile";
 
 function App() {
   return (
     <div className="App">
       <div>
         <NavBar />
-        <ProviderContainer />
+        <main>
+          <Routes>
+            <Route path='/' element={<ProviderContainer />}></Route>
+          </Routes>
+        </main>
       </div>
     </div>
   );
