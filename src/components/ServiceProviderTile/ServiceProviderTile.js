@@ -1,12 +1,17 @@
-import React from 'react';
-import classes from './ServiceProviderTile.module.css'
+import React from "react";
+import { NavLink } from "react-router-dom";
+import classes from "./ServiceProviderTile.module.css";
 
-const ServiceProviderTile = (props) => {
-return <section className={classes.content}>
-    <img src='https://image.shutterstock.com/image-vector/bus-isolated-260nw-541717828.jpg'></img>
-    <h2> Service name 1</h2>
-    <div className={classes.rating}> rating 4.1</div>
-</section>
-}
+const ServiceProviderTile = ({ title, id, rating, image }) => {
+  return (
+    <NavLink to="/" style={{ textDecoration: "none" }}>
+      <section className={classes.content}>
+        <img className={classes.image} src={image}></img>
+        <h2>{title}</h2>
+        <div className={classes.rating}> rating {rating}</div>
+      </section>
+    </NavLink>
+  );
+};
 
 export default ServiceProviderTile;
