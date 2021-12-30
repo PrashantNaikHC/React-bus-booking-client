@@ -4,7 +4,7 @@ import classes from "./ServiceProviderTile.module.css";
 
 const ServiceProviderTile = ({ title, id, rating, image }) => {
   return (
-    <NavLink to="/" style={{ textDecoration: "none" }}>
+    <NavLink to={`/services?service_provider_id=${id}`} style={{ textDecoration: "none" }}>
       <section className={classes.content}>
         <img className={classes.image} src={image}></img>
         <h2>{title}</h2>

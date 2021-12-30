@@ -1,6 +1,6 @@
 import { useCallback, useReducer } from "react";
 
-const httpReducer = (state, action) => {
+function httpReducer(state, action) {
   if (action.type === "SEND") {
     return {
       status: "pending",
@@ -41,7 +41,7 @@ function useHttp(apiRequest, startWithPendingState = false) {
       } catch (error) {
         dispatch({
           type: "ERROR",
-          errorMessage: error.errorMessage || "Something went wrong!",
+          errorMessage: error.message || "Something going wrong!",
         });
       }
     },
