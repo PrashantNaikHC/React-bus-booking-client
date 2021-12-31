@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { getServiceProviders } from "../../lib/api";
 import ServiceProviderTile from "../ServiceProviderTile/ServiceProviderTile";
 import classes from "./ProviderContainer.module.css";
 import useHttp from "../../hooks/use-http";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
+import DetailsContext from "../../store/details-context";
 
 const ProviderContainer = (props) => {
+  const detailsContext = useContext(DetailsContext);
   const { sendRequest, status, data, error } = useHttp(getServiceProviders);
 
   useEffect(() => {
     sendRequest();
-  }, [sendRequest]);
+    detailsContext.setShowDetails(true);
+  }, [sendRequest, detailsContext]);
 
   if (status === "completed") {
     console.log("data", data);

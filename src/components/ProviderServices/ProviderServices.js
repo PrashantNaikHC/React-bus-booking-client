@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import useHttp from "../../hooks/use-http";
 import { getServices } from "../../lib/api";
+import DetailsContext from "../../store/details-context";
 import ServiceList from "../ServiceList/ServiceList";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 import classes from "./ProviderServices.module.css";
 
 const ProviderServices = (props) => {
   const location = useLocation();
+  const detailsContext = useContext(DetailsContext);
   const queryParams = new URLSearchParams(location.search);
   const providerId = queryParams.get("service_provider_id");
   const { sendRequest, status, data, error } = useHttp(
@@ -35,7 +37,7 @@ const ProviderServices = (props) => {
   return (
     <div className={classes.content}>
       {status === "completed" && <div><ServiceList serviceInfo={data.services}/></div>}
-      {status === "completed" && <img className={classes.image} src={data.image}/>}
+      {status === "completed" &&  detailsContext.showDetails && <img className={classes.image} src={data.image}/>}
     </div>
   );
 };

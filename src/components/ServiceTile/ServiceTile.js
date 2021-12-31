@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import DetailsContext from "../../store/details-context";
 import Button from "../UI/Button/Button";
 import classes from "./ServiceTile.module.css";
 
 const ServiceTile = ({ service }) => {
+  const detailsContext = useContext(DetailsContext);
+  const clickHandler = () => {
+      if(detailsContext.showDetails) {
+          detailsContext.setShowDetails(false)
+      } else {
+        detailsContext.setShowDetails(true)
+      }
+  };
+
   return (
     <div className={classes.card}>
       <div>
@@ -16,7 +26,7 @@ const ServiceTile = ({ service }) => {
         <p>Fare : {service.Fare} + Taxes</p>
         <div className={classes.row}>
           <p>Seats Available : {service.available_seats}</p>
-          <Button>Book</Button>
+          <Button onClick={clickHandler}>Book</Button>
         </div>
       </div>
     </div>
