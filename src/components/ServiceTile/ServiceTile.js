@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../UI/Button/Button";
 import classes from "./ServiceTile.module.css";
 
 const ServiceTile = ({ service }) => {
@@ -15,7 +16,7 @@ const ServiceTile = ({ service }) => {
         <p>Fare : {service.Fare} + Taxes</p>
         <div className={classes.row}>
           <p>Seats Available : {service.available_seats}</p>
-          <button>Book</button>
+          <Button>Book</Button>
         </div>
       </div>
     </div>
