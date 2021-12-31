@@ -2,3 +2,9 @@
     display: flex;
     justify-content: space-around;
 }
+
+.image {
+    margin-top: 30px;
+    width: 400px;
+    height: 400px;
+}

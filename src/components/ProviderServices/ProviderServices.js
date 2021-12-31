@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import useHttp from "../../hooks/use-http";
 import { getServices } from "../../lib/api";
+import ServiceList from "../ServiceList/ServiceList";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 import classes from "./ProviderServices.module.css";
 
@@ -33,8 +34,8 @@ const ProviderServices = (props) => {
 
   return (
     <div className={classes.content}>
-      {status === "completed" && <div>{data.rating}</div>}
-      {status === "completed" && <img src={data.image}/>}
+      {status === "completed" && <div><ServiceList serviceInfo={data.services}/></div>}
+      {status === "completed" && <img className={classes.image} src={data.image}/>}
     </div>
   );
 };
