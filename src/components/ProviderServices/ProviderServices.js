@@ -4,6 +4,7 @@ import useHttp from "../../hooks/use-http";
 import { getServices } from "../../lib/api";
 import DetailsContext from "../../store/details-context";
 import ServiceList from "../ServiceList/ServiceList";
+import ServiceDetailsTile from "../ServiceDetailsTile/ServiceDetailsTile";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 import classes from "./ProviderServices.module.css";
 
@@ -37,7 +38,8 @@ const ProviderServices = (props) => {
   return (
     <div className={classes.content}>
       {status === "completed" && <div><ServiceList serviceInfo={data.services}/></div>}
-      {status === "completed" &&  detailsContext.showDetails && <img className={classes.image} src={data.image}/>}
+      {status === "completed" &&  !detailsContext.showDetails && <img className={classes.image} src={data.image}/>}
+      {status === "completed" &&  detailsContext.showDetails && <ServiceDetailsTile service={detailsContext.showDetails}/>}
     </div>
   );
 };

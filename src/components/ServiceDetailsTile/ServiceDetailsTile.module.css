@@ -1,0 +1,40 @@
+.container {
+    width: 600px;
+    height: 600px;
+    border-radius: 5px;
+    background-color: rgb(228, 228, 228);
+}
+
+.row {
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+.left {
+    text-align: start;
+}
+
+.right {
+    text-align: end;
+}
+
+.rowstart {
+    padding-left: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    text-align: start;
+}
+
+.shortrow {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.label {
+    text-align: start;
+}

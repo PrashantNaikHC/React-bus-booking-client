@@ -13,7 +13,7 @@ const ProviderContainer = (props) => {
 
   useEffect(() => {
     sendRequest();
-    detailsContext.setShowDetails(true);
+    detailsContext.setShowDetails(null);
   }, [sendRequest, detailsContext]);
 
   if (status === "completed") {

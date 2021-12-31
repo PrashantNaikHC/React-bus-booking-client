@@ -6,11 +6,7 @@ import classes from "./ServiceTile.module.css";
 const ServiceTile = ({ service }) => {
   const detailsContext = useContext(DetailsContext);
   const clickHandler = () => {
-      if(detailsContext.showDetails) {
-          detailsContext.setShowDetails(false)
-      } else {
-        detailsContext.setShowDetails(true)
-      }
+    detailsContext.setShowDetails(service);
   };
 
   return (
