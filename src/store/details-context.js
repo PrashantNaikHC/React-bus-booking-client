@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 
 const DetailsContext = React.createContext({
-  showDetails: null,
-  setShowDetails: (service) => {},
+  service: null,
+  setService: (service) => {},
 });
 
 export const DetailsContextprovider = (props) => {
-  const [detailsShowing, setDetailsShowing] = useState(null);
-  const setDetails = (service) => {
-    setDetailsShowing(service);
+  const [service, setService] = useState(null);
+  const setServiceMethod = (service) => {
+    setService(service);
   };
 
   const contextValue = {
-    showDetails: detailsShowing,
-    setShowDetails: setDetails,
+    service: service,
+    setService: setServiceMethod,
   };
 
   return (
