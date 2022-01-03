@@ -15,13 +15,11 @@ const ServiceTile = ({ service }) => {
         <img className={classes.image} src={service.image} />
       </div>
       <div className={classes.list}>
-        <h4>
-          {service.from} - {service.to}
-        </h4>
-        <p>Type : {service.type}</p>
-        <p>Fare : {service.Fare} + Taxes</p>
+        {service.from} - {service.to}
+        <div>Type : {service.type}</div>
+        <div>Fare : {service.Fare} + Taxes</div>
         <div className={classes.row}>
-          <p>Seats Available : {service.available_seats}</p>
+          <div>Seats Available : {service.available_seats}</div>
           <Button onClick={clickHandler}>Book</Button>
         </div>
       </div>
