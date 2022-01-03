@@ -39,8 +39,7 @@ const ProviderServices = (props) => {
     <div className={classes.content}>
       {status === "completed" && <div><ServiceList serviceInfo={data.services}/></div>}
       {status === "completed" &&  !detailsContext.service && <img className={classes.image} src={data.image}/>}
-      {status === "completed" &&  detailsContext.service && <ServiceDetailsTile service={detailsContext.service}/>}
-      {/* {status === "completed" &&  detailsContext.service && <ServiceDetailsTile service={detailsContext.service}/>} */}
+      {status === "completed" &&  detailsContext.service && <div className={classes.details} ><ServiceDetailsTile service={detailsContext.service}/></div>}
     </div>
   );
 };

@@ -6,9 +6,10 @@
 }
 
 .row {
-    padding: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: baseline;
 }
 
@@ -37,4 +38,9 @@
 
 .label {
     text-align: start;
+}
+
+input {
+    width: 200px;
+    padding: 5px;
 }
