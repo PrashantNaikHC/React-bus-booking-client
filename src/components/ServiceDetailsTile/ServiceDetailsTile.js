@@ -6,6 +6,7 @@ import { Button, TextField } from "@mui/material";
 
 const ServiceDetailsTile = ({ providerId, service }) => {
   const [tickets, setTickets] = useState(1);
+  const [name, setName] = useState('');
   const [seatNumber, setSeatNumbers] = useState(null);
   const dispatch = useDispatch();
   const booking = useSelector((state) => state.booking.data);
@@ -32,6 +33,10 @@ const ServiceDetailsTile = ({ providerId, service }) => {
   const ticketsHandler = (event) => {
     setTickets(event.target.value);
     console.log(event.target.value);
+  };
+
+  const nameHandler = (event) => {
+    setName(event.target.value);
   };
 
   const confirmBookingHandler = (event) => {
@@ -78,11 +83,8 @@ const ServiceDetailsTile = ({ providerId, service }) => {
             type="text"
             id="name"
             name="Name"
-            value={service.available_seats === 0 ? 0 : tickets}
-            onChange={ticketsHandler}
-            InputProps={{
-              inputProps: { min: 0, max: service.available_seats },
-            }}
+            value={name}
+            onChange={nameHandler}
           />
         </div>
         <div>
