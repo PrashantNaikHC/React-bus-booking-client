@@ -1,6 +1,6 @@
+import { Button } from "@mui/material";
 import React, { useContext } from "react";
 import DetailsContext from "../../store/details-context";
-import Button from "../UI/Button/Button";
 import classes from "./ServiceTile.module.css";
 
 const ServiceTile = ({ service }) => {
@@ -20,7 +20,7 @@ const ServiceTile = ({ service }) => {
         <div>Fare : {service.Fare} + Taxes</div>
         <div className={classes.row}>
           <div>Seats Available : {service.available_seats}</div>
-          <Button onClick={clickHandler}>Book</Button>
+          <Button variant="contained" onClick={clickHandler}>Book</Button>
         </div>
       </div>
     </div>

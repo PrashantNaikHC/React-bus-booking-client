@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import classes from "./ServiceDetailsTile.module.css";
-import Button from "../UI/Button/Button";
 import { bookSeatsAsync } from "../../store/booking-slice";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, TextField } from "@mui/material";
 
 const ServiceDetailsTile = ({ providerId, service }) => {
   const [tickets, setTickets] = useState(1);
@@ -71,25 +71,34 @@ const ServiceDetailsTile = ({ providerId, service }) => {
 
       <div className={classes.row}>
         <div>
-          <div className={classes.label}>
-            <label htmlFor="name">Name :</label>
-          </div>
-          <input id="name" name="name"></input>
+          <TextField
+            id="filled-basic"
+            label="Name"
+            variant="filled"
+            type="text"
+            id="name"
+            name="Name"
+            value={service.available_seats === 0 ? 0 : tickets}
+            onChange={ticketsHandler}
+            InputProps={{
+              inputProps: { min: 0, max: service.available_seats },
+            }}
+          />
         </div>
-
         <div>
-          <div className={classes.label}>
-            <label htmlFor="tickets">Tickets :</label>
-          </div>
-          <input
+          <TextField
+            id="filled-basic"
+            label="Tickets"
+            variant="filled"
             type="number"
             id="tickets"
-            name="tickets"
-            max={service.available_seats}
+            name="Tickets"
             value={service.available_seats === 0 ? 0 : tickets}
-            min={0}
             onChange={ticketsHandler}
-          ></input>
+            InputProps={{
+              inputProps: { min: 0, max: service.available_seats },
+            }}
+          />
         </div>
       </div>
 
@@ -142,7 +151,9 @@ const ServiceDetailsTile = ({ providerId, service }) => {
             </div>
           </div>
           <div className={classes.right}>
-            <Button onClick={confirmBookingHandler}>Confirm Booking</Button>
+            <Button variant="contained" onClick={confirmBookingHandler}>
+              Confirm Booking
+            </Button>
           </div>
         </div>
       </div>
