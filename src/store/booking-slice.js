@@ -21,7 +21,7 @@ const bookingSlice = createSlice({
     },
     bookingError(state, action) {
       state.isLoading = false;
-      state.data = null;
+      state.data = "error";
       state.error = action.payload;
     },
   },
@@ -36,6 +36,7 @@ export const bookSeatsAsync = (bookingDetails) => {
       const data = await bookSeats(bookingDetails);
       dispatch(bookingActions.bookingSuccess(data));
     } catch (error) {
+      console.log('slice error',error);
       dispatch(bookingActions.bookingError(error));
     }
   };

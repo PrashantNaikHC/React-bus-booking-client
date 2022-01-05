@@ -49,10 +49,12 @@ export const bookSeats = async (bookingDetails) => {
 
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || "Could not fetch data");
+    console.log('data  >',data.data);
+    throw new Error(data.data);
   }
   if (response.status === 400) {
-    throw new Error(data.message || "Could not fetch data");
+    console.log('data  >>',data);
+    throw new Error(data);
   }
   console.log("api bookSeats", data);
   return data;

@@ -2,14 +2,30 @@ import React, { useEffect, useState } from "react";
 import classes from "./ServiceDetailsTile.module.css";
 import { bookSeatsAsync } from "../../store/booking-slice";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, TextField } from "@mui/material";
+import { Button, Link, TextField } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 
 const ServiceDetailsTile = ({ providerId, service }) => {
   const [tickets, setTickets] = useState(1);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [seatNumber, setSeatNumbers] = useState(null);
   const dispatch = useDispatch();
-  const booking = useSelector((state) => state.booking.data);
+  const booking = useSelector((state) => state.booking);
+  const [open, setOpen] = React.useState(false);
+  console.log("hh", booking);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   useEffect(() => {
     selectedSeats(tickets);
@@ -47,6 +63,7 @@ const ServiceDetailsTile = ({ providerId, service }) => {
         route_id: service.route_id,
       })
     );
+    setOpen(true);
   };
 
   const selectedSeats = (seats) => {
@@ -112,7 +129,8 @@ const ServiceDetailsTile = ({ providerId, service }) => {
           <div>Fare : {service.Fare}</div>
           <br />
           <div>From : {service.from}</div>
-          <div>To : {service.to}</div>
+          <div>To : {service.to}</div> 
+          <div>Departure : {new Date(Date.parse(service.departure_time)).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric", hour:"numeric", minute: "numeric"})}</div>
           <br />
         </div>
 
@@ -159,11 +177,25 @@ const ServiceDetailsTile = ({ providerId, service }) => {
           </div>
         </div>
       </div>
-      {booking && (
-        <p
-          className={classes.rowstart}
-        >{`Booking confirmed. Booking id : ${booking.data.booking_id}`}</p>
-      )}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        {booking.data === "error" ? (
+          <Alert
+            onClose={handleClose}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            {`${booking.error}`}
+          </Alert>
+        ) : (
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            {`Booking confirmed.`}
+          </Alert>
+        )}
+      </Snackbar>
     </div>
   );
 };
