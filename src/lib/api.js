@@ -35,6 +35,25 @@ export const getServices = async (id) => {
   return data;
 };
 
-export const bookSeats = async () => {
-  // todo
+// expects body of {"seats":"1", "service_provider_id":"789123", "route_id":"852"}
+export const bookSeats = async (bookingDetails) => {
+  // headers is required here to send the body
+  const response = await fetch(`${isLocalSource(true)}book`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(bookingDetails),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Could not fetch data");
+  }
+  if (response.status === 400) {
+    throw new Error(data.message || "Could not fetch data");
+  }
+  console.log("api bookSeats", data);
+  return data;
 };
