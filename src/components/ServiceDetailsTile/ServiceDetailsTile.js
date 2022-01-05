@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import classes from "./ServiceDetailsTile.module.css";
 import Button from "../UI/Button/Button";
 import { bookSeatsAsync } from "../../store/booking-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const ServiceDetailsTile = ({ service }) => {
+const ServiceDetailsTile = ({ providerId, service }) => {
   const [tickets, setTickets] = useState(1);
   const [seatNumber, setSeatNumbers] = useState(null);
   const dispatch = useDispatch();
+  const booking = useSelector((state) => state.booking.data);
 
   useEffect(() => {
     selectedSeats(tickets);
@@ -34,12 +35,11 @@ const ServiceDetailsTile = ({ service }) => {
   };
 
   const confirmBookingHandler = (event) => {
-    console.log("confirmed");
     dispatch(
       bookSeatsAsync({
-        seats: "1",
-        service_provider_id: "789123",
-        route_id: "852",
+        seats: tickets,
+        service_provider_id: providerId,
+        route_id: service.route_id,
       })
     );
   };
@@ -146,6 +146,11 @@ const ServiceDetailsTile = ({ service }) => {
           </div>
         </div>
       </div>
+      {booking && (
+        <p
+          className={classes.rowstart}
+        >{`Booking confirmed. Booking id : ${booking.data.booking_id}`}</p>
+      )}
     </div>
   );
 };
