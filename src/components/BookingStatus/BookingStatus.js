@@ -32,6 +32,11 @@ export default function BookingStatus() {
     return <LoadingSpinner />;
   }
 
+  if(status === "completed" && data.length === 0) {
+      console.log("emm");
+      return <h1>Currently no bookings!</h1>
+  }
+
   return (
     <div className={classes.block}>
       {status === "completed" &&
