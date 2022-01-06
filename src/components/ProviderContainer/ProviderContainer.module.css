@@ -6,9 +6,7 @@
   align-items: flex-start;
   flex-wrap: wrap;
   align-items: baseline;
-
+  gap: 40px;
   position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+  top: 100px;
 }

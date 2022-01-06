@@ -115,7 +115,7 @@ const ServiceDetailsTile = ({ providerId, service }) => {
               severity="success"
               sx={{ width: "100%" }}
             >
-              {`Booking confirmed. Check the booking status`}
+              {`Booking confirmed. Check the booking status `}
               <a target="_blank" href={`http://localhost:3000/bookings`}>
                 here
               </a>
