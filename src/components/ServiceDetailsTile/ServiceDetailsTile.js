@@ -10,7 +10,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-
 const ServiceDetailsTile = ({ providerId, service }) => {
   const [tickets, setTickets] = useState(1);
   const [name, setName] = useState("");
@@ -18,7 +17,6 @@ const ServiceDetailsTile = ({ providerId, service }) => {
   const dispatch = useDispatch();
   const booking = useSelector((state) => state.booking);
   const [open, setOpen] = React.useState(false);
-  console.log("hh", booking);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -56,11 +54,19 @@ const ServiceDetailsTile = ({ providerId, service }) => {
   };
 
   const confirmBookingHandler = (event) => {
+    const totalFare =
+      getGst(tickets * service.Fare) +
+      getServiceTax(tickets * service.Fare) +
+      getRoadTax(tickets * service.Fare) +
+      tickets * service.Fare +
+      "₹";
     dispatch(
       bookSeatsAsync({
         seats: tickets,
         service_provider_id: providerId,
         route_id: service.route_id,
+        positions: seatNumber,
+        amount: totalFare,
       })
     );
     setOpen(true);
@@ -82,6 +88,46 @@ const ServiceDetailsTile = ({ providerId, service }) => {
     setSeatNumbers(text);
   };
 
+  const snackbar = (bookingObj) => {
+    if (bookingObj.isLoading === false) {
+      console.log("result >>", bookingObj);
+
+      if (bookingObj.data === "error") {
+        return (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {`${bookingObj.error}.`}
+            </Alert>
+          </Snackbar>
+        );
+      }
+
+      if (bookingObj.data !== null) {
+        return (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              {`Booking confirmed. Booking ID `}
+              <a
+                target="_blank"
+                href={`http://localhost:5000/react-bus-services/status?booking_id=${bookingObj.data.data.booking_id}`}
+              >
+                booking id
+              </a>
+            </Alert>
+          </Snackbar>
+        );
+      }
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.row}>
@@ -90,7 +136,6 @@ const ServiceDetailsTile = ({ providerId, service }) => {
           {service.from} - {service.to} ({service.available_seats})
         </h4>
       </div>
-
       <div className={classes.row}>
         <div>
           <TextField
@@ -120,7 +165,6 @@ const ServiceDetailsTile = ({ providerId, service }) => {
           />
         </div>
       </div>
-
       <h4 className={classes.rowstart}>Details</h4>
       <div className={classes.row}>
         <div className={classes.left}>
@@ -129,8 +173,21 @@ const ServiceDetailsTile = ({ providerId, service }) => {
           <div>Fare : {service.Fare}</div>
           <br />
           <div>From : {service.from}</div>
-          <div>To : {service.to}</div> 
-          <div>Departure : {new Date(Date.parse(service.departure_time)).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric", hour:"numeric", minute: "numeric"})}</div>
+          <div>To : {service.to}</div>
+          <div>
+            Departure :{" "}
+            {new Date(Date.parse(service.departure_time)).toLocaleDateString(
+              "en-us",
+              {
+                weekday: "long",
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              }
+            )}
+          </div>
           <br />
         </div>
 
@@ -177,25 +234,7 @@ const ServiceDetailsTile = ({ providerId, service }) => {
           </div>
         </div>
       </div>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        {booking.data === "error" ? (
-          <Alert
-            onClose={handleClose}
-            severity="error"
-            sx={{ width: "100%" }}
-          >
-            {`${booking.error}`}
-          </Alert>
-        ) : (
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            {`Booking confirmed.`}
-          </Alert>
-        )}
-      </Snackbar>
+      {snackbar(booking)}
     </div>
   );
 };
