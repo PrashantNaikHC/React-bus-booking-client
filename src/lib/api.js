@@ -7,7 +7,7 @@ const isLocalSource = (useLocal) => {
 };
 
 export const getServiceProviders = async () => {
-  const response = await fetch(`${isLocalSource(true)}providers`);
+  const response = await fetch(`${isLocalSource(false)}providers`);
   const data = await response.json();
   if (!response.ok) {
     throw new Error(data.message || "Could not fetch data");
@@ -21,7 +21,7 @@ export const getServiceProviders = async () => {
 
 export const getServices = async (id) => {
   const response = await fetch(
-    `${isLocalSource(true)}services?` +
+    `${isLocalSource(false)}services?` +
       new URLSearchParams({ service_provider_id: id })
   );
   const data = await response.json();
@@ -37,7 +37,7 @@ export const getServices = async (id) => {
 
 export const getBookings = async () => {
   const response = await fetch(
-    `${isLocalSource(true)}bookings`
+    `${isLocalSource(false)}bookings`
   );
   const data = await response.json();
   if (!response.ok) {
@@ -53,7 +53,7 @@ export const getBookings = async () => {
 // expects body of {"seats":"1", "service_provider_id":"789123", "route_id":"852"}
 export const bookSeats = async (bookingDetails) => {
   // headers is required here to send the body
-  const response = await fetch(`${isLocalSource(true)}book`, {
+  const response = await fetch(`${isLocalSource(false)}book`, {
     method: "POST",
     headers: {
       Accept: "application/json",
