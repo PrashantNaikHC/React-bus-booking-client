@@ -7,6 +7,7 @@ import ProviderServices from "./components/ProviderServices/ProviderServices";
 import store from "./store";
 import { red } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import BookingStatus from "./components/BookingStatus/BookingStatus";
 
 const theme = createTheme({
   palette: {
@@ -34,6 +35,11 @@ function App() {
             <main>
               <Routes>
                 <Route path="/services" element={<ProviderServices />}></Route>
+              </Routes>
+            </main>
+            <main>
+              <Routes>
+                <Route path="/bookings" element={<BookingStatus />}></Route>
               </Routes>
             </main>
           </div>

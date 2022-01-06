@@ -62,6 +62,7 @@ const ServiceDetailsTile = ({ providerId, service }) => {
       "₹";
     dispatch(
       bookSeatsAsync({
+        name: name,
         seats: tickets,
         service_provider_id: providerId,
         route_id: service.route_id,
@@ -114,13 +115,11 @@ const ServiceDetailsTile = ({ providerId, service }) => {
               severity="success"
               sx={{ width: "100%" }}
             >
-              {`Booking confirmed. Booking ID `}
-              <a
-                target="_blank"
-                href={`http://localhost:5000/react-bus-services/status?booking_id=${bookingObj.data.data.booking_id}`}
-              >
-                booking id
+              {`Booking confirmed. Check the booking status`}
+              <a target="_blank" href={`http://localhost:3000/bookings`}>
+                here
               </a>
+              .
             </Alert>
           </Snackbar>
         );
