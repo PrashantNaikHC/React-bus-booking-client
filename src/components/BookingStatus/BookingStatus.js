@@ -11,9 +11,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import classes from "./BookingStatus.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { userBookingActions } from "../../store/user-bookings-slice";
 
 export default function BookingStatus() {
   const { sendRequest, status, data, error } = useHttp(getBookings);
+  const dispatch = useDispatch();
+  const userBookingsSelection = useSelector(state => state.userBookings);
 
   useEffect(() => {
     sendRequest();
@@ -22,10 +26,6 @@ export default function BookingStatus() {
   if (error) {
     console.log("error");
     return <p>{error}</p>;
-  }
-
-  if (status === "completed") {
-    console.log("data >> ", data.rating);
   }
 
   if (status === "pending") {
@@ -37,10 +37,14 @@ export default function BookingStatus() {
       return <h1>Currently no bookings!</h1>
   }
 
+  if (status === "completed") {
+    dispatch(userBookingActions.addToBookings(data))
+  }
+
   return (
     <div className={classes.block}>
-      {status === "completed" &&
-        data.map((booking) => (
+      {userBookingsSelection &&
+        userBookingsSelection.userBookings.map((booking) => (
           <div>
             <Box sx={{ minWidth: 275 }}>
               <Card variant="outlined">
