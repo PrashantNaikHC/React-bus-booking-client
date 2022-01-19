@@ -21,9 +21,7 @@ const ServiceTile = ({ service }) => {
         <div>Type : {service.type}</div>
         <div>Fare : {service.Fare} + Taxes</div>
         <div className={classes.row}>
-          <Typography variant="caption" display="block" gutterBottom>
-            Seats Available : {service.available_seats}
-          </Typography>
+          <div>Seats Available : {service.available_seats}</div>
           <Button variant="contained" size="small" onClick={clickHandler}>
             Book
           </Button>

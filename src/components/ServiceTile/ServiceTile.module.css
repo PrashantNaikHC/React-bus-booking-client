@@ -14,7 +14,8 @@
 }
 
 .list {
-    width: 200px;
+    align-items: flex-start;
+    width: 400px;
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
@@ -33,7 +34,10 @@ li {
 }
 
 .row {
+    align-items: center;
     display: flex;
-    justify-content: space-between;
-    margin-left: 20px;
+    justify-content: center;
+    flex-direction: row;
+    margin-right: 10px;
+    gap: 20px;
 }
