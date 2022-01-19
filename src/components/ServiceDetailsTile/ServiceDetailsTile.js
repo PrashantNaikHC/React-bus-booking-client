@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./ServiceDetailsTile.module.css";
 import { bookSeatsAsync } from "../../store/booking-slice";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Link, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Link, Slide, TextField } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
@@ -17,6 +17,15 @@ const ServiceDetailsTile = ({ providerId, service }) => {
   const dispatch = useDispatch();
   const booking = useSelector((state) => state.booking);
   const [open, setOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleDialogOpen = () => {
+    setOpenDialog(true)
+  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -71,6 +80,7 @@ const ServiceDetailsTile = ({ providerId, service }) => {
       })
     );
     setOpen(true);
+    setOpenDialog(false);
   };
 
   const selectedSeats = (seats) => {
@@ -227,13 +237,66 @@ const ServiceDetailsTile = ({ providerId, service }) => {
             </div>
           </div>
           <div className={classes.right}>
-            <Button variant="contained" onClick={confirmBookingHandler}>
+            <Button variant="contained" onClick={handleDialogOpen}>
               Confirm Booking
             </Button>
           </div>
         </div>
       </div>
       {snackbar(booking)}
+      <Dialog
+        open={openDialog}
+        keepMounted
+        onClose={handleDialogClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Confirm Booking"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <div>Please check and confirm the below booking details before proceeding with payment.</div>
+            <hr/>
+            <table>
+              <th>Booking Details</th>
+              <tr>
+                <td>Name </td>
+                <td>{name} </td>
+              </tr>
+
+              <tr>
+                <td>From </td>
+                <td>{service.from} </td>
+              </tr>
+
+              <tr>
+                <td>To </td>
+                <td>{service.to} </td>
+              </tr>
+
+              <tr>
+                <td>Class </td>
+                <td>{service.type} </td>
+              </tr>
+
+              <tr>
+                <td>Seat numbers </td>
+                <td>{seatNumber} </td>
+              </tr>
+              <tr>
+                <td>Total amount </td>
+                <td>{getGst(tickets * service.Fare) +
+                getServiceTax(tickets * service.Fare) +
+                getRoadTax(tickets * service.Fare) +
+                tickets * service.Fare}{" "}
+              ₹ </td>
+              </tr>
+            </table>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>Cancel</Button>
+          <Button onClick={confirmBookingHandler}>Confirm</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
