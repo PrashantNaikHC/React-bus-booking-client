@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./ServiceDetailsTile.module.css";
 import { bookSeatsAsync } from "../../store/booking-slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,12 +18,17 @@ const ServiceDetailsTile = ({ providerId, service }) => {
   const booking = useSelector((state) => state.booking);
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const nameRef = useRef()
+  const ticketsRef = useRef()
 
   const handleDialogClose = () => {
     setOpenDialog(false);
   };
 
   const handleDialogOpen = () => {
+    if(nameRef.current.value === "" || ticketsRef.current.value == 0) {
+      return;  
+    }
     setOpenDialog(true)
   };
 
@@ -55,7 +60,6 @@ const ServiceDetailsTile = ({ providerId, service }) => {
 
   const ticketsHandler = (event) => {
     setTickets(event.target.value);
-    console.log(event.target.value);
   };
 
   const nameHandler = (event) => {
@@ -151,10 +155,13 @@ const ServiceDetailsTile = ({ providerId, service }) => {
             id="filled-basic"
             label="Name"
             variant="filled"
+            inputRef={nameRef}
             type="text"
             id="name"
             name="Name"
             value={name}
+            error={name === ""}
+            helperText={name === "" && "Name cannot be left blank"}
             onChange={nameHandler}
           />
         </div>
@@ -163,6 +170,7 @@ const ServiceDetailsTile = ({ providerId, service }) => {
             id="filled-basic"
             label="Tickets"
             variant="filled"
+            inputRef={ticketsRef}
             type="number"
             id="tickets"
             name="Tickets"
@@ -171,6 +179,8 @@ const ServiceDetailsTile = ({ providerId, service }) => {
             InputProps={{
               inputProps: { min: 0, max: service.available_seats },
             }}
+            error={tickets == 0}
+            helperText={tickets == 0 && "minimum is one ticket"}
           />
         </div>
       </div>
