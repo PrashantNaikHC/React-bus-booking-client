@@ -7,7 +7,7 @@ const ServiceList = ({ serviceInfo }) => {
     <div className={classes.content}>
       <ul>
         {serviceInfo.map((service) => (
-          <li>
+          <li key={service.route_id}>
             <ServiceTile service={service}/>
           </li>
         ))}

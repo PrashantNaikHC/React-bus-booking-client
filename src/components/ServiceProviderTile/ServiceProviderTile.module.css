@@ -1,15 +1,27 @@
 .content {
-    width: 400px;
+    width: 340px;
     background-color: lightgray;
 }
 
 .rating {
     background-color: rgb(243, 70, 70);
     padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ratingHeader {
+    color: white;
+    align-self: center;
+}
+
+.ratingValue {
+    color: white;
+    font-size: 2rem;
 }
 
 .image {
     padding: 10px;
-    width: 350px;
+    width: 320px;
     height: 300px;
 }

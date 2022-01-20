@@ -248,7 +248,7 @@ const ServiceDetailsTile = ({ providerId, service }) => {
           </div>
           <div className={classes.right}>
             <Button variant="contained" onClick={handleDialogOpen}>
-              Confirm Booking
+              Book tickets
             </Button>
           </div>
         </div>
